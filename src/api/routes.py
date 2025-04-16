@@ -1,8 +1,9 @@
 from fastapi import APIRouter, Request
-from loguru import logger
+from src.utils.sql import Logger
 from fastapi.responses import FileResponse
 from src.api.classes import Authorize_Class
-from utils.sql import Logger
+
+
 router = APIRouter()
 
 # basic logger route
