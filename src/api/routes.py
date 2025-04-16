@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Request
-from src.utils.sql import Logger
+from utils.sql import Logger
 from fastapi.responses import FileResponse
 from src.api.classes import Authorize_Class
 
@@ -7,13 +7,10 @@ from src.api.classes import Authorize_Class
 router = APIRouter()
 
 # basic logger route
-@router.get("/{logger_id}.png")
+@router.get("/{logger_id}")
 async def logger(logger_id: str, request: Request) -> FileResponse:
-    headers = request.headers.get
-    if "X-Real-IP" in request.headers.get:
-        await Logger.addLog(headers["X-Real-IP"], logger_id)
-    else:
-        return request.client.host
+    headers = request.headers.get("X-Real-IP")
+    await Logger.addLog(headers, logger_id)
     return FileResponse(f"image.png")
 
 @router.post("/api/create")
@@ -36,7 +33,7 @@ async def delete_logger(data: Authorize_Class, logger_id: str):
 @router.put("/{logger_id}")
 async def get_logs(data: Authorize_Class, logger_id: str):
     token = data.token
-    log = await Logger.getLogger(logger_id)
+    log = await Logger.getLogs(logger_id)
     if(log != False):
         return {"status": "success", "logger_id": logger_id, "logs": log}
     else:

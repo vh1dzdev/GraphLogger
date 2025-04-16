@@ -5,15 +5,14 @@ from contextlib import asynccontextmanager
 
 from src.api.routes import router as api_router
 from fastapi.responses import RedirectResponse
-from src.utils.sql import init_db
+from utils.sql import init_db
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    await init_db().__init()
+    await init_db._init()
     yield
 
 app = FastAPI(lifespan=lifespan)
-
 app.include_router(api_router)
 
 @app.get("/")
