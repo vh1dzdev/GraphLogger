@@ -9,8 +9,11 @@ router = APIRouter()
 # basic logger route
 @router.get("/{logger_id}.png")
 async def logger(logger_id: str, request: Request) -> FileResponse:
-    ip = request.get_headears.get("x-real-ip")
-    await Logger.addLog(ip, logger_id)
+    headers = request.headers.get
+    if "X-Real-IP" in request.headers.get:
+        await Logger.addLog(headers["X-Real-IP"], logger_id)
+    else:
+        return request.client.host
     return FileResponse(f"image.png")
 
 @router.post("/api/create")

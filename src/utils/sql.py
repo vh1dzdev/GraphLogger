@@ -8,7 +8,7 @@ import aiofiles
 
 # Creating a database if it does not exist
 class init_db():
-    async def __init__():
+    async def __init():
         if os.path.isfile(cfg.db_path):
             pass
         else:
