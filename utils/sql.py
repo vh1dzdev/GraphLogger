@@ -1,11 +1,24 @@
 import config as cfg
 import aiosqlite
+import os
 from datetime import datetime
 from loguru import logger
 import uuid
+import aiofiles
+
+# Creating a database if it does not exist
 class init_db():
-    async def init(self):
-        self.super()
+    async def __init__():
+        if os.path.isfile(cfg.db_path):
+            pass
+        else:
+            async with aiofiles.open(cfg.db_path, mode='a+') as f:
+                await f.write()
+            async with aiosqlite.connect(cfg.db_path) as db:
+                await db.execute("CREATE TABLE IF NOT EXISTS loggers (id INTEGER PRIMARY KEY, logger_id TEXT)")
+                await db.excute("CREATE TABLE IF NOT EXISTS logs (id INTEGER PRIMARY KEY, ip TEXT, logger_id TEXT, date TEXT)")
+                await db.commit()
+        
 
 class Logger():
     # Adding a log to the database
