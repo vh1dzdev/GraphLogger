@@ -2,26 +2,38 @@ from fastapi import APIRouter, Request
 from loguru import logger
 from fastapi.responses import FileResponse
 from src.api.classes import Authorize_Class
-
+from utils.sql import Logger
 router = APIRouter()
 
 # basic logger route
 @router.get("/{logger_id}.png")
 async def logger(logger_id: str, request: Request) -> FileResponse:
     ip = request.get_headears.get("x-real-ip")
-    logger.info(ip) # here will be the method for adding an IP to the DB, but for now here is the console output
+    await Logger.addLog(ip, logger_id)
     return FileResponse(f"image.png")
 
 @router.post("/api/create")
 async def create_logger() -> dict:
-    return {"message": "So far this method does not create anything."}
+    log = await Logger.createLogger()
+    if (log != False):
+        return {"status": "success", "logger_id": log}
+    else:
+        return {"status": "error", "message": ""}
 
 @router.delete("/{logger_id}")
 async def delete_logger(data: Authorize_Class, logger_id: str):
     token = data.token
-    return {"message": "At the moment, there is no functionality for deleting the logger."}
+    log = await Logger.removeLogger(logger_id)
+    if(log == True):
+        return {"status": "success", "message": ""}
+    else:
+        return {"status": "error", "message": ""}
 
 @router.put("/{logger_id}")
-async def get_logger_info(data: Authorize_Class, logger_id: str):
+async def get_logs(data: Authorize_Class, logger_id: str):
     token = data.token
-    return {"message": "At the moment, the functionality for receiving logger information has not been implemented."}
+    log = await Logger.getLogger(logger_id)
+    if(log != False):
+        return {"status": "success", "logger_id": logger_id, "logs": log}
+    else:
+        return {"status": "error", "message": "Logs not found"}
