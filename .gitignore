@@ -1,1 +1,6 @@
 /.venv/
+/.base.db/
+/.__pycache__/
+/.venv/
+/.src/api/__pycache__
+/.src/utils/__pycache__
