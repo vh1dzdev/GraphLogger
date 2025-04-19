@@ -31,3 +31,5 @@ pip install -r requirements.txt
 ```bash
 python3 main.py
 ```
+
+This project was made for the track Rory in early 20s - Subete No Mono No Owari Wa Sugu Ni Yattekuru.7 (Samikague)
