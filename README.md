@@ -15,15 +15,19 @@ git clone https://github.com/vh1dzdev/GraphLogger.git | cd GraphLogger | pip ins
 ```
 
 Default(SbS)
+1. Clone project
 ```bash
 git clone https://github.com/vh1dzdev/GraphLogger.git
 ```
+2. Go to project directory
 ```bash
 cd GraphLogger
 ```
+3. Install requirements
 ```bash
 pip install -r requirements.txt
 ```
+4. Start
 ```bash
 python3 main.py
 ```
